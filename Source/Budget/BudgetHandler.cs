@@ -55,10 +55,8 @@ namespace RP0
             {
                 if ((data.reason & TransactionReasons.Contracts) > 0)
                 {
-                    Debug.Log($"[RP0] Reputation change valid for budgets:");
                     reputation += reputationChange;
                 }
-                Debug.Log($"[RP0] Reputation changed by: {reputationChange} (reason: {data.reason}, total reputation: {reputation})");
             }
         }
 
