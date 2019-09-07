@@ -16,8 +16,8 @@ namespace RP0
         public double reputation = -double.MaxValue;
 
         public const int BudgetPeriodMonths = 3;
-        public const double BaseBudgetStart = 50000 * BudgetPeriodMonths / 12;
-        public const double BaseBudgetEnd = 200000 * BudgetPeriodMonths / 12;
+        public const double BaseBudgetStart = 5000 * BudgetPeriodMonths / 12;
+        public const double BaseBudgetEnd = 300000 * BudgetPeriodMonths / 12;
         public const int StartToEndPeriods = 12 * 4;
         public const float ReputationDecayFactor = 0.125f;
         public const float ReputationToFundsFactor = 1000;
@@ -50,6 +50,7 @@ namespace RP0
 
         private void OnCurrencyModified(CurrencyModifierQuery data)
         {
+            LogCurrencyChange(data);
             var reputationChange = data.GetInput(Currency.Reputation);
             if (reputationChange != 0)
             {
@@ -57,6 +58,16 @@ namespace RP0
                 {
                     reputation += reputationChange;
                 }
+            }
+        }
+
+        private static void LogCurrencyChange(CurrencyModifierQuery data)
+        {
+            var reputation = data.GetInput(Currency.Reputation);
+            var funds = data.GetInput(Currency.Funds);
+            if (funds != 0 || reputation != 0)
+            {
+                Debug.Log($"[RP0] Currency change: Reason: {data.reason}, Funds: {funds}, Rep: {reputation}");
             }
         }
 
